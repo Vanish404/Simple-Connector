@@ -11,48 +11,42 @@ namespace MySQL
 {
     class ConnectToMySQL
     {
-        private MySqlConnection _connection;
-        public ConnectToMySQL(MySqlConnection connection)
+        public DataTable GetComments(string server, string database, string username, string password)
         {
-            _connection = connection;
-            
-        }
-        public MySqlConnection AddMySQLQuer(string server, string database, string username, string password)
-        {
+            DataTable dt = new DataTable();
+
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder(); 
             mysqlCSB.Server = server;
             mysqlCSB.Database = database;
             mysqlCSB.UserID = username;
             mysqlCSB.Password = password;
+
+            string queryString = @"SELECT comment_author, 
+                                 comment_date,     
+                                 comment_content               
+                          FROM   fgel_comments
+                          WHERE  comment_date";
             
-            MySqlConnection con = new MySqlConnection(mysqlCSB.ConnectionString);
-
-            return con;
-        }
-
-        public DataTable GetComments(MySqlConnection con, string queryString)
-        {
-            DataTable dt = new DataTable();
- 
+            MySqlConnection con = new MySqlConnection(mysqlCSB.ConnectionString); 
+            con.ConnectionString = mysqlCSB.ConnectionString;
             MySqlCommand com = new MySqlCommand(queryString, con);
 
             try
             {
                 con.Open();
 
-                MySqlDataReader dr = com.ExecuteReader();
-
-                if (dr.HasRows)
+                using (MySqlDataReader dr = com.ExecuteReader())
                 {
-                    dt.Load(dr);
+                    if (dr.HasRows)
+                    {
+                        dt.Load(dr);
+                    }
                 }
-
-                MessageBox.Show("Успех");
             }
 
             catch (Exception ex)
             {
-                MessageBox.Show("Что-то пошло не так. " + ex.Message);
+                MessageBox.Show(ex.Message);
 
             }
                 con.Close();
