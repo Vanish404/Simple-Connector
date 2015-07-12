@@ -11,12 +11,7 @@ namespace MySQL
 {
     class ConnectToMySQL
     {
-        private MySqlConnection _connection;
-        public ConnectToMySQL(MySqlConnection connection)
-        {
-            _connection = connection;
-            
-        }
+
         public MySqlConnection AddMySQLQuer(string server, string database, string username, string password)
         {
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder(); 

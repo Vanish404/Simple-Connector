@@ -19,6 +19,7 @@ namespace MySQL
             InitializeComponent();
             _con = con;
             button1.Enabled = false;
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -88,6 +89,19 @@ namespace MySQL
             }
         }
 
+        private void textBox_KeyPress_Digit(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsDigit(e.KeyChar)))
+            {
+                if (e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+                else
+                    e.Handled = false;
+            }
+        }
+
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -108,6 +122,19 @@ namespace MySQL
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             CheckInputTextBox();
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите выйти без сохранения?", "Выйти?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }
