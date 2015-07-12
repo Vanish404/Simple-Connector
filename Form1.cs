@@ -23,7 +23,7 @@ namespace MySQL
         {
             InitializeComponent();
 
-            _connectToMySQL = new ConnectToMySQL();
+            _connectToMySQL = new ConnectToMySQL(_mySqlConnection);
               
         }
         
@@ -83,18 +83,13 @@ namespace MySQL
 
         }
 
-
-        private void baseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addNewUserToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void addNewUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 _form2 = new Form2(_mySqlConnection);
-            _form2.Owner = this;
-            _form2.ShowDialog();
-
+            _form2.Show();
+            this.WindowState = FormWindowState.Minimized;
+            
+            
 
         }
 
