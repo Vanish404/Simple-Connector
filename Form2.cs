@@ -18,6 +18,7 @@ namespace MySQL
         {
             InitializeComponent();
             _con = con;
+            button1.Enabled = false;
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -51,19 +52,42 @@ namespace MySQL
                 cmd.Parameters.AddWithValue("@Age", textBox3.Text);
 
                 cmd.ExecuteNonQuery();
+                MessageBox.Show("Все сохранено.");
+
             }
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Что-то пошло не так. " + ex.Message);
             }
-            
-
-
-           
-            
-
         }
+
+        private void CheckInputTextBox()
+        {
+            if (textBox1.Text.Trim() == "" || textBox2.Text.Trim() == "" || textBox3.Text.Trim() == "")
+            {
+                button1.Enabled = false;
+            }
+
+            else
+            {
+                button1.Enabled = true;
+            }
+        }
+
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsLetter(e.KeyChar)))
+            {
+                if (e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+                else
+                    e.Handled = false;
+            }
+        }
+
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -72,7 +96,18 @@ namespace MySQL
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
+            CheckInputTextBox();
+        }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            CheckInputTextBox();
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            CheckInputTextBox();
         }
     }
 }
