@@ -11,12 +11,7 @@ namespace MySQL
 {
     class ConnectToMySQL
     {
-        private MySqlConnection _connection;
-        public ConnectToMySQL(MySqlConnection connection)
-        {
-            _connection = connection;
-            
-        }
+
         public MySqlConnection AddMySQLQuer(string server, string database, string username, string password)
         {
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder(); 
@@ -30,7 +25,7 @@ namespace MySQL
             return con;
         }
 
-        public DataTable GetComments(MySqlConnection con, string queryString)
+        public DataTable GetData(MySqlConnection con, string queryString)
         {
             DataTable dt = new DataTable();
  

@@ -16,25 +16,32 @@ namespace MySQL
     
     public partial class Form1 : Form
     {
+        public bool isConnect;
         private ConnectToMySQL _connectToMySQL;
         private MySqlConnection _mySqlConnection;
         
-        public Form1()
+        public Form1(MySqlConnection _mySqlConnection, bool isConnect)
         {
             InitializeComponent();
-
-            _connectToMySQL = new ConnectToMySQL(_mySqlConnection);
-              
+            _connectToMySQL = new ConnectToMySQL();
+            dataGridView1.ReadOnly = true;
+            toolStripMenuItem2.Enabled = false;
+            this.isConnect = isConnect;
+            this._mySqlConnection = _mySqlConnection;
         }
         
        
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            _mySqlConnection = _connectToMySQL.AddMySQLQuer(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text);
-            string queryString = @"SELECT name, surname, age, date_birthday               
+            if (isConnect == true)
+            {
+                string queryString = @"SELECT name, surname, age, date_birthday               
                                  FROM   base";
-            dataGridView1.DataSource = _connectToMySQL.GetComments(_mySqlConnection, queryString);
+                dataGridView1.DataSource = _connectToMySQL.GetData(_mySqlConnection, queryString);
+            }
+            else
+                MessageBox.Show("Нет подключения." + isConnect);
             
         }
 
@@ -83,13 +90,33 @@ namespace MySQL
 
         }
 
-        private void addNewUserToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void baseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addNewUserToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Form2 _form2 = new Form2(_mySqlConnection);
-            _form2.Show();
-            this.WindowState = FormWindowState.Minimized;
-            
-            
+            _form2.Owner = this;
+            _form2.ShowDialog();         
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form3 _form3 = new Form3();
+            _form3.Owner = this;
+            _form3.ShowDialog();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
 
         }
 
