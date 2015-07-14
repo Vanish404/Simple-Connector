@@ -16,45 +16,71 @@ namespace MySQL
     
     public partial class Form1 : Form
     {
-        public event BoolDelegate _boolDelegate; //инцилизация
-        public event MySqlDelegate _mySqlDelegate;
-        
-        private bool isConnect;
+        public bool isConnect;
         private ConnectToMySQL _connectToMySQL;
         private MySqlConnection _mySqlConnection;
-        public Form1()
+        
+        public Form1(MySqlConnection _mySqlConnection, bool isConnect)
         {
             InitializeComponent();
             _connectToMySQL = new ConnectToMySQL();
             dataGridView1.ReadOnly = true;
             toolStripMenuItem2.Enabled = false;
-
+            this.isConnect = isConnect;
+            this._mySqlConnection = _mySqlConnection;
         }
         
        
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            if (_boolDelegate != null && _mySqlDelegate != null) //вызов делегата
-            {
-                isConnect = _boolDelegate();
-                _mySqlConnection = _mySqlDelegate();
-            }
-
             if (isConnect == true)
             {
-                toolStripMenuItem2.Enabled = true;
                 string queryString = @"SELECT name, surname, age, date_birthday               
                                  FROM   base";
                 dataGridView1.DataSource = _connectToMySQL.GetData(_mySqlConnection, queryString);
             }
-
             else
                 MessageBox.Show("Нет подключения." + isConnect);
             
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
@@ -73,13 +99,13 @@ namespace MySQL
         private void addNewUserToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Form2 _form2 = new Form2(_mySqlConnection);
+            _form2.Owner = this;
             _form2.ShowDialog();         
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            isConnect = false;
-            toolStripMenuItem2.Enabled = false;
+
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
