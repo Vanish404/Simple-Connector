@@ -16,6 +16,7 @@ namespace MySQL
         private ConnectToMySQL _connectToMySql;
         private MySqlConnection mySql;
         private bool isConnect = false;
+        Form1 _fr = new Form1();
 
         public Form3()
         {
@@ -33,21 +34,27 @@ namespace MySQL
                 MySqlCommand com = new MySqlCommand(emptySque, mySql);
                 mySql.Open();
 
-                MessageBox.Show("Соединение утсановлено.");
                 isConnect = true;
+                MessageBox.Show("Соединение утсановлено.");
+                mySql.Close();
                 this.Close();
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            finally
-            {
-                mySql.Close();
-                Form1 form1 = this.Owner as Form1;
 
-                
-            }
+        }
+
+        private bool returnIsConnect()// эта функция для делегата
+        {
+            return isConnect;
+        }
+
+        private MySqlConnection returnConnection()
+        {
+            return mySql;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -68,6 +75,13 @@ namespace MySQL
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form3_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Form1 form1 = this.Owner as Form1;
+            form1._boolDelegate += returnIsConnect;
+            form1._mySqlDelegate += returnConnection;
         }
     }
 }
