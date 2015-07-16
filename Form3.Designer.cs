@@ -137,6 +137,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form3";
             this.Text = "Connect";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form3_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

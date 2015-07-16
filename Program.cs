@@ -7,6 +7,8 @@ using MySql.Data.MySqlClient;
 
 namespace MySQL
 {
+    public delegate bool BoolDelegate();
+    public delegate MySqlConnection MySqlDelegate();
     static class Program
     {
         /// <summary>
@@ -18,7 +20,8 @@ namespace MySQL
             MySqlConnection sql = new MySqlConnection();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(sql,false));
+            Application.Run(new Form1());
         }
     }
+
 }
